@@ -11,28 +11,49 @@ class Date:
 
 class Client:
 	num_clients = 0
-	def __init__(self, id_=0, name=0, address=0, phone=0,date_first_buy=0,date_last_buy=0):
+	instances = []
+
+	def __init__(self, name=0, address=0, phone=0,date_first_buy=0,date_last_buy=0):
 	    Client.num_clients += 1
-	    self.id_ = id_
+	    self.__class__.instances.append(self)	
+
+	    self.id_ = Client.num_clients
 	    self.name = name 
 	    self.address = address
 	    self.phone = phone
 	    self.date_first_buy = Date(date_first_buy)
 	    self.date_last_buy = Date(date_last_buy)
+	    print("Cliente {} cadastrado".format(self.id_))
+
+	@classmethod    
+	def print_instances(cls):
+		for instance in cls.instances:
+			print(instance.id_,instance.name)
+
+	@classmethod		
+	def consulta(cls,id_):
+		found = False
+		for client in cls.instances:
+			if client.id_ == id_:
+				found = True
+				print("Cliente {}:{} encontrado!".format(id_,client.name))
 
 
-class Clients:
-	list = []
-#	def __init__(self):
-#		self.entries = []
-	def new_entry(self, id_, name, address, phone, date_first_buy, date_last_buy):
-		self.list.append(Client(id_, name, address, phone,date_first_buy,date_last_buy))
+		if(not found):
+			print("Cliente {} não encontrado".format(id_))
 
+	@classmethod		
+	def exclude(cls,id_):
+		found = 0
+		for i in range(len(cls.instances)):
+			client = cls.instances[i]
+			if client.id_ == id_:
+				found = i
+				print("Cliente",client.name,"excluido!")
+	
 
-
-Clients.new_entry(1,"Daniel Brito","Guaxindiba","22992343274","12/11/1997","12/11/1997")
-Clients.new_entry(2,'Daniel Santos','Campos','22992343274',"12/11/1997","12/11/1997")
-Clients.new_entry(3,'Daniel Santos','Campos','22992343274',"12/11/1997","12/11/1997")
-
-
-
+		if(found == 0):
+			print("Cliente não encontrado")
+		else:
+			del cls.instances[found]
+		
