@@ -1,0 +1,2 @@
+Escreva um programa em C que classifique as palavras em um texto, disponível na forma de arquivo, em categorias de acordo com a letra inicial de cada palavra. As palavras iniciadas com a mesma letra deverão ser colocadas em uma mesma fila. Após a classificação, exiba o número de palavras existentes em cada categoria.
+
