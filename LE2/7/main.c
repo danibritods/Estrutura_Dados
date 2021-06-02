@@ -4,7 +4,7 @@
 #include <stdio.h> 
 #include <stdlib.h>
 #include <stdbool.h>
-#include "queues.h" 
+#include "./../lib/queues.h" 
 
 void main(){
     QUEUE* qA = createQueue();
