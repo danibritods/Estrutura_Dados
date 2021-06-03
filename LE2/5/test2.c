@@ -28,8 +28,7 @@ int calculate(int op1, int op2, int op3)
 
 void main(){
     QUEUE* fila = createQueue();
-    int expre[] = {'-',9,2,'\n'};
-    //int expre[] = {'-','+','*',9,'+',2,8,'*','+',4,8,6,3,'\n'};
+    int expre[] = {'-','+','*',9,'+',2,8,'*','+',4,8,6,3,'\n'};
     int *dataPtr;
     int op1,op2,op3;
 
@@ -38,43 +37,44 @@ void main(){
             dataPtr = &expre[i];
             enqueue(fila,dataPtr);
     };
-    dequeue(fila,(void*)&dataPtr); 
-    op1 = *dataPtr;
-    dequeue(fila,(void*)&dataPtr); 
-    op2 = *dataPtr;
-    dequeue(fila,(void*)&dataPtr); 
-    op3 = *dataPtr;
+    for(int i = 0; (queueCount(fila) > 1); i++){
 
-    for(int i = 0; (queueCount(fila) > 0); i++)
-    {
-        if(isOperator(op1) && !isOperator(op2) && !isOperator(op3))
+        dequeue(fila,(void*)&dataPtr); 
+        op1 = *dataPtr;
+
+        if(!isOperator(op1))
         {
             dataPtr = malloc(sizeof(int));
-            *dataPtr = calculate(op1,op2,op3);
-            enqueue(fila,dataPtr);
-            if(queueCount(fila)>2)
-            {
-                dequeue(fila,(void*)&dataPtr); 
-                op1 = *dataPtr;
-                dequeue(fila,(void*)&dataPtr); 
-                op2 = *dataPtr;
-                dequeue(fila,(void*)&dataPtr); 
-                op3 = *dataPtr;
-            }
-        }
-        else
-        {
             *dataPtr = op1;
             enqueue(fila,dataPtr);
-            op1 = op2;
-            op2 = op3;
+        }
+        else        
+        {
+            dequeue(fila,(void*)&dataPtr); 
+            op2 = *dataPtr;
             dequeue(fila,(void*)&dataPtr); 
             op3 = *dataPtr;
-        }     
-    }
-
+            if(!isOperator(op2) && !isOperator(op3))
+            {
+                dataPtr = malloc(sizeof(int));
+                *dataPtr = calculate(op1,op2,op3);
+                enqueue(fila,dataPtr);
+            }
+            else
+            {
+                *dataPtr = op1;
+                enqueue(fila,dataPtr);
+                *dataPtr = op2;
+                enqueue(fila,dataPtr);
+                *dataPtr = op3;
+                enqueue(fila,dataPtr);
+            }
+        }
+    };
     dequeue(fila,(void*)&dataPtr); 
-    printf("O resultado dessa expressão é: %d \n",(*dataPtr));
+    op1 = *dataPtr;
+    printf("O resultado dessa expressão é: %d \n",(int)op1);
 
-    printf("O resultado dessa expressão é: %d \n",(calculate(op2,*dataPtr,op1)));
-};
+
+
+}
