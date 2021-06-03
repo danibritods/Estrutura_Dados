@@ -75,6 +75,5 @@ void main(){
 
     dequeue(fila,(void*)&dataPtr); 
     printf("O resultado dessa expressão é: %d \n",(*dataPtr));
-
     printf("O resultado dessa expressão é: %d \n",(calculate(op2,*dataPtr,op1)));
 };
